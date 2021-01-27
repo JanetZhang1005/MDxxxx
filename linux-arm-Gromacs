@@ -44,7 +44,8 @@ step5:install Gromacs
 >>> mkdir build && cd build
 >>> cmake .. -DGMX_FFT_LIBRARY=fftw3 -DCMAKE_BUILD_TYPE=Debug -DREGRESSIONTEST_PATH=/gromacs/regressiontests-2020.5 -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
 >>> make && make install # Wait...
->>> echo echo 'source /usr/local/gromacs/bin/GMXRC' >> ~/.bashrc
+>>> echo echo 'source /usr/local/gromacs/bin/GMXRC' 
+>>> ~/.bashrc
 >>> rm -rf /gromacs
 >>> ldconfig
 
