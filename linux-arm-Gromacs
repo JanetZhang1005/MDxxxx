@@ -1,0 +1,53 @@
+This file is a description about how to install the 'Gromacs'(A famous software for Molecular Dynamics) on linux-arm operation system.
+
+step1:install the doxygen
+>>> sudo apt-get install doxygen
+
+step2:update the cmake
+#It's not neccessary to remove the old version
+>>> wget https://github.com/Kitware/CMake/releases/download/v3.19.3/cmake-3.19.3-Linux-aarch64.tar.gz
+>>> tar zxvf cmake-3.19.3-Linux-aarch64.tar.gz
+>>> mv cmake-3.19.3-Linux-aarch64 /opt/cmake-3.19.3
+>>> ln -sf /opt/cmake-3.19.3/bin/* /usr/bin #Building soft links
+>>> cmake --version #check version
+
+step3:update the curl (with ssl)
+>>> sudo apt-get install openssl
+>>> sudo apt-get install libssl-dev
+>>> wget https://curl.se/download/curl-7.74.0.tar.gz
+>>> tar -xvzf curl-7.74.0.tar.gz
+>>> cd curl-7.74.0
+>>> ./configure disable-shared
+>>> make 
+>>> sudo make install
+>>> curl --version
+
+step4:install FFTW
+>>> mkdir /FFTW
+>>> cd /FFTW
+>>> wget http://www.fftw.org/fftw-3.3.8.tar.gz
+>>> tar xf fftw-3.3.8.tar.gz
+>>> cd fftw-3.3.8
+>>> ./configure --enable-shared --enable-static --enable-float
+>>> make && make install 
+>>> rm -rf /FFTW
+>>> ldconfig
+
+step5:install Gromacs
+>>> mkdir /gromacs 
+>>> cd /gromacs
+>>> wget ftp://ftp.gromacs.org/regressiontests/regressiontests-2020.5.tar.gz #keep the version same as the Gromacs 
+>>> tar xf regressiontests-2020.5.tar.gz
+>>> wget ftp://ftp.gromacs.org/pub/gromacs/gromacs-2020.5.tar.gz
+>>> tar xf gromacs-2020.5.tar.gz
+>>> cd gromacs-2020.5
+>>> mkdir build && cd build
+>>> cmake .. -DGMX_FFT_LIBRARY=fftw3 -DCMAKE_BUILD_TYPE=Debug -DREGRESSIONTEST_PATH=/gromacs/regressiontests-2020.5 -DCMAKE_C_COMPILER=gcc -DCMAKE_CXX_COMPILER=g++
+>>> make && make install # Wait...
+>>> echo echo 'source /usr/local/gromacs/bin/GMXRC' >> ~/.bashrc
+>>> rm -rf /gromacs
+>>> ldconfig
+
+Done!Enjoy it!
+
+>>> cd /gromacs
